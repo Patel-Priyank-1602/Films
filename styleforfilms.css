@@ -274,58 +274,150 @@ nav {
 }
 
 /* ========== SUGGESTIONS ========== */
-.content-section:has(.badge:where([text="Recommendations"])) {
+.content-section:has(.badge[data-text="Recommendations"]) {
   border-left: 3px solid var(--primary);
 }
 
 .suggestions-list {
-  margin: 20px 0;
+  margin: 20px 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
 
-.suggestions-list h4 {
+/* Main details container styling */
+.suggestions-list details {
+  background: #222;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,.3);
+  transition: var(--transition);
+  border-left: 3px solid transparent;
+}
+
+.suggestions-list details:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,.4);
+}
+
+/* When details are open */
+.suggestions-list details[open] {
+  border-left: 3px solid var(--primary);
+  background: #252525;
+}
+
+/* Summary styling (the header part) */
+.suggestions-list summary {
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  position: relative;
+  background: linear-gradient(to right, #222, #2a2a2a);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition);
+}
+
+.suggestions-list summary:hover {
+  background: linear-gradient(to right, #252525, #303030);
+}
+
+/* Remove default arrow */
+.suggestions-list summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Custom arrow/icon styling */
+.suggestions-list summary::after {
+  content: "\f105";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
   color: var(--primary);
   font-size: 1.1rem;
-  margin: 15px 0 10px;
-  padding-bottom: 3px;
+  transition: transform 0.3s ease;
+}
+
+.suggestions-list details[open] summary::after {
+  content: "\f107";
+  transform: rotate(0deg);
+}
+
+/* Add a genre icon before each category */
+.suggestions-list summary::before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  background-color: rgba(229, 9, 20, 0.15);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 0.75rem;
+  color: var(--primary);
+}
+
+/* Custom icons for each genre - these would need to be adjusted for your specific categories */
+.suggestions-list details:nth-child(1) summary::before { content: "\f2bd"; } /* Lokiverse - user */
+.suggestions-list details:nth-child(2) summary::before { content: "\f52b"; } /* Mystery - magnifying glass */
+.suggestions-list details:nth-child(3) summary::before { content: "\f6e2"; } /* Horror - ghost */
+.suggestions-list details:nth-child(4) summary::before { content: "\f54a"; } /* Action - fist */
+.suggestions-list details:nth-child(5) summary::before { content: "\f21b"; } /* Thriller - user-secret */
+.suggestions-list details:nth-child(6) summary::before { content: "\f599"; } /* Comedy - laugh  */
+.suggestions-list details:nth-child(7) summary::before { content: "\f02d"; } /* True Stories - book */
+.suggestions-list details:nth-child(8) summary::before { content: "\f756"; } /* Zombie - skull */
+.suggestions-list details:nth-child(9) summary::before { content: "\f11b"; } /* Game-Themed - gamepad */
+.suggestions-list details:nth-child(10) summary::before { content: "\f3d1"; } /* Financial - money-bill */
+.suggestions-list details:nth-child(11) summary::before { content: "\f602"; } /* Superhero - mask */
+.suggestions-list details:nth-child(12) summary::before { content: "\f302"; } /* Anime - pencil */
+.suggestions-list details:nth-child(13) summary::before { content: "\f3fa"; } /* South Drama Movies - film */
+
+/* Content styling (the list part) */
+.suggestions-list details[open] > summary {
+  margin-bottom: 0;
   border-bottom: 1px solid #333;
 }
 
-.suggestions-list h4:first-of-type {
-  margin-top: 0;
-}
-
 .suggestions-list ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 10px;
   list-style: none;
-  margin-bottom: 15px;
+  padding: 15px;
+  background: #252525;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
 }
 
 .suggestions-list li {
-  background: linear-gradient(135deg, #2a2a2a, #333);
-  border-radius: var(--radius);
-  padding: 10px 12px;
-  color: #fff;
-  font-weight: 500;
-  transition: var(--transition);
-  box-shadow: 0 2px 5px rgba(0,0,0,.2);
-  cursor: pointer;
+  background: #333;
+  color: #e5e5e5;
+  font-size: 0.85rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
 }
 
 .suggestions-list li::before {
   content: "\f008";
   font-family: "Font Awesome 6 Free";
   font-weight: 900;
+  font-size: 0.7rem;
   margin-right: 8px;
   color: var(--primary);
-  font-size: 0.9rem;
+  opacity: 0.8;
 }
 
 .suggestions-list li:hover {
-  background: linear-gradient(135deg, #333, #444);
+  background: #3a3a3a;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,.3);
+  box-shadow: 0 3px 6px rgba(0,0,0,.2);
+  color: white;
 }
 
 /* ========== FOOTER ========== */
@@ -447,6 +539,10 @@ footer {
   .overlay {
     opacity: 0;
   }
+  
+  .suggestions-list {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
@@ -465,15 +561,15 @@ footer {
   .tag {
     margin-bottom: 15px;
   }
+  
+  .suggestions-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 400px) {
-  .suggestions-list ul {
+  .suggestions-list {
     grid-template-columns: 1fr;
-  }
-
-  .suggestions-list h4 {
-    font-size: 1rem;
   }
 }
 
